@@ -7,11 +7,11 @@ import (
 	runtimeClient "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-type CheClusterRequestValidator struct {
+type K8sImagePullerRequestValidator struct {
 	Client runtimeClient.Client
 }
 
-func (v CheClusterRequestValidator) HandleValidate(w http.ResponseWriter, r *http.Request) {
+func (v K8sImagePullerRequestValidator) HandleValidate(w http.ResponseWriter, r *http.Request) {
 	var respBody []byte
 	body, err := io.ReadAll(r.Body)
 	defer func() {
@@ -33,7 +33,7 @@ func (v CheClusterRequestValidator) HandleValidate(w http.ResponseWriter, r *htt
 	}
 }
 
-func (v CheClusterRequestValidator) validate(body []byte) []byte {
+func (v K8sImagePullerRequestValidator) validate(body []byte) []byte {
 	log.Info("incoming request", "body", string(body))
 	return allowIfNonSandboxUser(body, &v.Client)
 }

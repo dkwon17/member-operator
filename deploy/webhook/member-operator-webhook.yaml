@@ -239,11 +239,11 @@ objects:
           path: "/validate-users-kubernetesimagepullers"
           port: 443
       matchPolicy: Equivalent
-      rules: // TODO verify 
+      rules:
         - operations: ["CREATE"]
           apiGroups: ["che.eclipse.org"]
           apiVersions: ["v1alpha1"]
-          resources: ["checlusters"]
+          resources: ["kubernetesimagepullers"]
           scope: "Namespaced"
       sideEffects: None
       timeoutSeconds: 5
