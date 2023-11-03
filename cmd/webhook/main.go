@@ -104,7 +104,7 @@ func main() {
 	mux.HandleFunc("/mutate-users-pods", mutatingwebhook.HandleMutateUserPods)
 	mux.HandleFunc("/mutate-virtual-machines", mutatingwebhook.HandleMutateVirtualMachines)
 	mux.HandleFunc("/validate-users-rolebindings", rolebindingValidator.HandleValidate)
-	mux.HandleFunc("/validate-users-checlusters", checlusterValidator.HandleValidate)
+	mux.HandleFunc("/validate-users-resources", checlusterValidator.HandleValidate)
 	mux.HandleFunc("/validate-spacebindingrequests", spacebindingrequestValidator.HandleValidate)
 
 	webhookServer := &http.Server{ //nolint:gosec //TODO: configure ReadHeaderTimeout (gosec G112)

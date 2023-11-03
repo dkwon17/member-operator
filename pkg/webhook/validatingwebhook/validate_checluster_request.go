@@ -63,12 +63,12 @@ func (v CheClusterRequestValidator) validate(body []byte) []byte {
 	}, requestingUser)
 
 	if err != nil {
-		log.Error(err, "unable to find the user requesting creation of the CheCluster resource", "username", admReview.Request.UserInfo.Username)
-		return denyAdmissionRequest(admReview, errors.New("unable to find the user requesting the  creation of the CheCluster resource"))
+		log.Error(err, "unable to find the user requesting creation of the"+admReview.Request.Kind.Kind+"resource", "username", admReview.Request.UserInfo.Username)
+		return denyAdmissionRequest(admReview, errors.Errorf("unable to find the user requesting the  creation of the %s resource", admReview.Request.Kind.Kind))
 	}
 	if requestingUser.GetLabels()[toolchainv1alpha1.ProviderLabelKey] == toolchainv1alpha1.ProviderLabelValue {
-		log.Info("sandbox user is trying to create a CheCluster", "AdmissionReview", admReview)
-		return denyAdmissionRequest(admReview, errors.New("this is a Dev Sandbox enforced restriction. you are trying to create a CheCluster resource, which is not allowed"))
+		log.Info("sandbox user is trying to create a "+admReview.Request.Kind.Kind, "AdmissionReview", admReview)
+		return denyAdmissionRequest(admReview, errors.Errorf("this is a Dev Sandbox enforced restriction. you are trying to create a %s resource, which is not allowed", admReview.Request.Kind.Kind))
 	}
 	// at this point, it is clear the user isn't a sandbox user, allow request
 	return allowAdmissionRequest(admReview)
